@@ -620,7 +620,7 @@ impl<'a, 'gc> LayoutBuilder<'a, 'gc> {
 
         if default_font == DefaultFont::JapaneseGothic {
             for font_name in [
-                "SimSun",
+                "文津宋體C 第0平面",
                 "Noto Sans CJK SC",
                 "Microsoft YaHei",
                 "NSimSun",
