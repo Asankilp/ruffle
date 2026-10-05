@@ -398,7 +398,7 @@ impl ActivePlayer {
                 DefaultFont::JapaneseGothicMono,
                 vec![
                     "Osaka－等幅".into(),      // Mac with Japanese environment
-                    "MS Gothic".into(),        // Windows
+                    "文津宋体C 第0平面".into(), // Simplified Chinese and Linux
                     "Noto Sans CJK JP".into(), // Linux
                     "Arial Unicode MS".into(), // Mac fallback
                 ],

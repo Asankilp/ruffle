@@ -600,23 +600,42 @@ impl<'a, 'gc> LayoutBuilder<'a, 'gc> {
         // At this point, the font name was neither one of the default
         // fonts nor matched any device font. We explicitly handle some of the
         // well-known aliases for the default fonts for better compatibility
-        // with devices that don't have those fonts installed. As a last resort
-        // we fall back to using sans (like Flash).
+        // with devices that don't have those fonts installed. Prefer a
+        // Simplified Chinese font for the final fallback.
         let default_font = match font_name {
             "Times New Roman" => DefaultFont::Serif,
             "Arial" => DefaultFont::Sans,
             "Consolas" => DefaultFont::Typewriter,
             "Courier" => DefaultFont::Typewriter,
             "Courier New" => DefaultFont::Typewriter,
-            "NSimSun" => DefaultFont::Typewriter,
+            "NSimSun" => DefaultFont::JapaneseGothic,
             _ => {
                 if font_name.contains("Ming") || font_name.contains('明') {
                     DefaultFont::JapaneseMincho
                 } else {
-                    DefaultFont::Sans
+                    DefaultFont::JapaneseGothic
                 }
             }
         };
+
+        if default_font == DefaultFont::JapaneseGothic {
+            for font_name in [
+                "SimSun",
+                "Noto Sans CJK SC",
+                "Microsoft YaHei",
+                "NSimSun",
+                "Source Han Sans CN",
+            ] {
+                let fonts = self.context.get_or_sort_device_fonts(
+                    font_name,
+                    span.style.bold,
+                    span.style.italic,
+                );
+                if let Some(font_sort) = FontSet::from_fonts(self.context.gc(), &fonts) {
+                    return font_sort;
+                }
+            }
+        }
 
         let fonts = self
             .context

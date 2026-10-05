@@ -26,6 +26,7 @@
         "@fluent/langneg": "^0.7.0",
         "@tsconfig/strictest": "^2.0.8",
         "@types/mocha": "^10.0.10",
+        "@types/node": "^26.6.4",
         "autoprefixer": "^10.6.1",
         "cssnano": "^9.0.5",
         "cssnano-preset-advanced": "^9.0.5",
